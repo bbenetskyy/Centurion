@@ -7,6 +7,7 @@ namespace AutoUpdateHost
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            Console.ReadLine();
         }
     }
 }
