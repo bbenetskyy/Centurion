@@ -49,7 +49,7 @@ namespace BotHost
                                     {
                                         MessageBox.Show(null,
                                         "Bot Updated to newer version!",
-                                        null,
+                                        "Update Completed",
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Information);
                                     }
@@ -57,8 +57,8 @@ namespace BotHost
                                     {
 
                                         MessageBox.Show(null,
-                                        "Bot was nto updated to newer version!",
-                                        null,
+                                        "Bot was not updated to newer version!",
+                                        "Update canceled",
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Exclamation);
                                     }
