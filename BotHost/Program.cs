@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BotHost.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,18 @@ namespace BotHost
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            try
+            {
+                System.Diagnostics.Process.Start(Settings.Default.BotExePath);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(null, e.Message, 
+                    "Fatal Application Error!", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Exclamation);
+            }
         }
     }
 }
