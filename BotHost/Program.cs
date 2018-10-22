@@ -24,70 +24,8 @@ namespace BotHost
 
             try
             {
-                DialogResult retry;
                 //Check for updates
-                do
-                {
-                    retry = DialogResult.Cancel;
-                    dynamic requestResult = repoChecker.CheckForUpdates();
-                    if (requestResult.Success)
-                    {
-                        if (requestResult.Result && MessageBox.Show(null,
-                            "Update Bot to newer version?",
-                            "Updates available",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question) == DialogResult.Yes)
-                        {
-                            requestResult = repoChecker.DownloadUpdate();
-                            if (requestResult.Success)
-                            {
-                                requestResult = repoChecker.UpdateApplication(requestResult.Result,
-                                    System.IO.Path.GetDirectoryName(Settings.Default.BotExePath));
-                                if (requestResult.Success)
-                                {
-                                    if (requestResult.Result)
-                                    {
-                                        MessageBox.Show(null,
-                                        "Bot Updated to newer version!",
-                                        "Update Completed",
-                                        MessageBoxButtons.OK,
-                                        MessageBoxIcon.Information);
-                                    }
-                                    else
-                                    {
-
-                                        MessageBox.Show(null,
-                                        "Bot was not updated to newer version!",
-                                        "Update canceled",
-                                        MessageBoxButtons.OK,
-                                        MessageBoxIcon.Exclamation);
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show(null, requestResult.Exception.Message,
-                                    "Can't update Bot",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Exclamation);
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show(null, requestResult.Exception.Message,
-                                "Can't download Update",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Exclamation);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        retry = MessageBox.Show(null, requestResult.Exception.Message,
-                        "Checking for Updates",
-                        MessageBoxButtons.RetryCancel,
-                        MessageBoxIcon.Exclamation);
-                    }
-                } while (retry == DialogResult.Retry);
+                CheckForUpdates(repoChecker);
             }
             finally
             {
@@ -103,6 +41,88 @@ namespace BotHost
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
                 }
+            }
+        }
+
+        private static void CheckForUpdates(IRepoChecker repoChecker)
+        {
+            DialogResult retry;
+            do
+            {
+                retry = DialogResult.Cancel;
+                var requestResult = repoChecker.CheckForUpdates();
+                if (requestResult.Success)
+                {
+                    if (requestResult.Result && MessageBox.Show(null,
+                        "Update Bot to newer version?",
+                        "Updates available",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        DownloadUpdates(repoChecker);
+                    }
+                }
+                else
+                {
+                    retry = MessageBox.Show(null, requestResult.Exception.Message,
+                    "Checking for Updates",
+                    MessageBoxButtons.RetryCancel,
+                    MessageBoxIcon.Exclamation);
+                }
+            } while (retry == DialogResult.Retry);
+        }
+
+        private static void DownloadUpdates(IRepoChecker repoChecker)
+        {
+            var requestResult = repoChecker.DownloadUpdates();
+            if (requestResult.Success)
+            {
+                UpdateApplication(repoChecker, requestResult.Result);
+            }
+            else
+            {
+                MessageBox.Show(null, requestResult.Exception.Message,
+                "Can't download Update",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private static void UpdateApplication(IRepoChecker repoChecker, string sourcePath)
+        {
+            var requestResult = repoChecker.UpdateApplication(sourcePath,
+                                    System.IO.Path.GetDirectoryName(Settings.Default.BotExePath));
+            if (requestResult.Success)
+            {
+                FinishUpdate(requestResult.Result);
+            }
+            else
+            {
+                MessageBox.Show(null, requestResult.Exception.Message,
+                "Can't update Bot",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private static void FinishUpdate(bool success)
+        {
+            if (success)
+            {
+                MessageBox.Show(null,
+                "Bot Updated to newer version!",
+                "Update Completed",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
+            else
+            {
+
+                MessageBox.Show(null,
+                "Bot was not updated to newer version!",
+                "Update canceled",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
             }
         }
     }
