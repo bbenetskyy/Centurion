@@ -1,4 +1,4 @@
-/AutoUpdateHost/bin
-/AutoUpdateHost/obj
-/AutoUpdateUtils/bin
-/AutoUpdateUtils/obj
+**/bin/*
+**/obj/*
+testBot/*
+.vs/*
