@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28124.53
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotHost", "BotHost\BotHost.csproj", "{884B9DFE-247A-4CE8-B90A-0AB7A0BA7888}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdateLib", "..\AutoUpdateLib\AutoUpdateLib.csproj", "{8AFA1C36-5892-42F2-825B-E03939397454}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdateLib", "AutoUpdateLib\AutoUpdateLib.csproj", "{8AFA1C36-5892-42F2-825B-E03939397454}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
