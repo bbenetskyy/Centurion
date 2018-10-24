@@ -25,10 +25,46 @@ namespace BotHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Work\\Centurion\\testBot\\DeleteAllPost.exe")]
-        public string BotExePath {
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\DeleteAllPost.exe")]
+        public string BotPath {
             get {
-                return ((string)(this["BotExePath"]));
+                return ((string)(this["BotPath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq")]
+        public string DownloadUrl {
+            get {
+                return ((string)(this["DownloadUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://drive.google.com/open?id=1_Y2kguvTsSjqXq-fpSel4I_18_uaA96E")]
+        public string CheckUrl {
+            get {
+                return ((string)(this["CheckUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DeleteAllPost.exe")]
+        public string BotFileName {
+            get {
+                return ((string)(this["BotFileName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("version.txt")]
+        public string VersionFileName {
+            get {
+                return ((string)(this["VersionFileName"]));
             }
         }
     }

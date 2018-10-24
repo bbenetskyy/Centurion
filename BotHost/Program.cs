@@ -32,11 +32,11 @@ namespace BotHost
                 //Run Bot Application
                 try
                 {
-                    System.Diagnostics.Process.Start(Settings.Default.BotExePath);
+                    System.Diagnostics.Process.Start(Settings.Default.BotPath);
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(null, e.Message,
+                    MessageBox.Show(e.Message,
                         "Fatal Application Error!",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
@@ -50,10 +50,10 @@ namespace BotHost
             do
             {
                 retry = DialogResult.Cancel;
-                var requestResult = repoChecker.CheckForUpdates();
+                var requestResult = repoChecker.CheckForUpdates(Settings.Default.CheckUrl);
                 if (requestResult.Success)
                 {
-                    if (requestResult.Result && MessageBox.Show(null,
+                    if (requestResult.Result && MessageBox.Show(
                         "Update Bot to newer version?",
                         "Updates available",
                         MessageBoxButtons.YesNo,
@@ -64,7 +64,7 @@ namespace BotHost
                 }
                 else
                 {
-                    retry = MessageBox.Show(null, requestResult.Exception.Message,
+                    retry = MessageBox.Show(requestResult.Exception.Message,
                     "Checking for Updates",
                     MessageBoxButtons.RetryCancel,
                     MessageBoxIcon.Exclamation);
@@ -74,14 +74,14 @@ namespace BotHost
 
         private static void DownloadUpdates(IRepoChecker repoChecker)
         {
-            var requestResult = repoChecker.DownloadUpdates();
+            var requestResult = repoChecker.DownloadUpdates(Settings.Default.DownloadUrl);
             if (requestResult.Success)
             {
                 UpdateApplication(repoChecker, requestResult.Result);
             }
             else
             {
-                MessageBox.Show(null, requestResult.Exception.Message,
+                MessageBox.Show(requestResult.Exception.Message,
                 "Can't download Update",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation);
@@ -90,15 +90,14 @@ namespace BotHost
 
         private static void UpdateApplication(IRepoChecker repoChecker, string sourcePath)
         {
-            var requestResult = repoChecker.UpdateApplication(sourcePath,
-                                    System.IO.Path.GetDirectoryName(Settings.Default.BotExePath));
+            var requestResult = repoChecker.UpdateApplication(sourcePath);
             if (requestResult.Success)
             {
                 FinishUpdate(requestResult.Result);
             }
             else
             {
-                MessageBox.Show(null, requestResult.Exception.Message,
+                MessageBox.Show(requestResult.Exception.Message,
                 "Can't update Bot",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation);
@@ -109,7 +108,7 @@ namespace BotHost
         {
             if (success)
             {
-                MessageBox.Show(null,
+                MessageBox.Show(
                 "Bot Updated to newer version!",
                 "Update Completed",
                 MessageBoxButtons.OK,
@@ -118,7 +117,7 @@ namespace BotHost
             else
             {
 
-                MessageBox.Show(null,
+                MessageBox.Show(
                 "Bot was not updated to newer version!",
                 "Update canceled",
                 MessageBoxButtons.OK,

@@ -9,8 +9,10 @@ namespace AutoUpdateLib.Interfaces
 {
     public interface IRepoChecker
     {
-        RequestResult<bool> CheckForUpdates();
-        RequestResult<string> DownloadUpdates();
-        RequestResult<bool> UpdateApplication(string sourcePath, string destinationPath);
+        string VersionFileName { get; set; }
+        string ApplicationPath { get; set; }
+        RequestResult<bool> CheckForUpdates(string url);
+        RequestResult<string> DownloadUpdates(string url);
+        RequestResult<bool> UpdateApplication(string sourcePath);
     }
 }

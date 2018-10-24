@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,23 +13,37 @@ namespace AutoUpdateLib
 {
     public class RepoChecker : IRepoChecker
     {
-        public RequestResult<bool> CheckForUpdates()
+        public string VersionFileName { get; set; }
+        public string ApplicationPath { get; set; }
+
+
+        public RequestResult<bool> CheckForUpdates(string url)
         {
-            //return new RequestResult<bool>(new Exception());
+            var versionFilePath = Path.Combine(ApplicationPath, VersionFileName);
+            if (!File.Exists(versionFilePath))
+                return new RequestResult<bool>(new FileNotFoundException
+                    ("Version File Not Found!", versionFilePath));
+            var waitForm = new WaitForm();
+            using (var client = new WebClient())
+            {
+                waitForm.Show();
+                client.DownloadFile("https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq", @".\bot.zip");
+                waitForm.Close();
+            }
             return new RequestResult<bool>(true);
         }
 
-        public RequestResult<string> DownloadUpdates()
+        public RequestResult<string> DownloadUpdates(string url)
         {
             //return new RequestResult<string>(new Exception());
             //using (var client = new WebClient())
             //{
-            //    client.DownloadFile("http://something", @"D:\Downloads\1.zip");
+            //    client.DownloadFile("https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq", @".\bot.zip");
             //}
             return new RequestResult<string>();
         }
 
-        public RequestResult<bool> UpdateApplication(string sourcePath, string destinationPath)
+        public RequestResult<bool> UpdateApplication(string sourcePath)
         {
             //return new RequestResult<bool>(new Exception());
             using (var strm = File.OpenRead(sourcePath))
