@@ -25,7 +25,7 @@ namespace BotHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".\\DeleteAllPost.exe")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Work\\Centurion\\testBot")]
         public string BotPath {
             get {
                 return ((string)(this["BotPath"]));
@@ -34,7 +34,8 @@ namespace BotHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq&export=downloa" +
+            "d")]
         public string DownloadUrl {
             get {
                 return ((string)(this["DownloadUrl"]));
@@ -43,7 +44,7 @@ namespace BotHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://drive.google.com/open?id=1_Y2kguvTsSjqXq-fpSel4I_18_uaA96E")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://drive.google.com/uc?id=1_Y2kguvTsSjqXq-fpSel4I_18_uaA96E&export=download")]
         public string CheckUrl {
             get {
                 return ((string)(this["CheckUrl"]));

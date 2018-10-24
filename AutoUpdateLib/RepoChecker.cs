@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AutoUpdateLib
@@ -23,14 +24,24 @@ namespace AutoUpdateLib
             if (!File.Exists(versionFilePath))
                 return new RequestResult<bool>(new FileNotFoundException
                     ("Version File Not Found!", versionFilePath));
-            var waitForm = new WaitForm();
+
+            var updateAvailable = false;
+            var newVersionFile = @".\newVersion.txt";
+            var waitForm = new WaitForm(50);
+
+            Task.Run(() => { waitForm.ShowDialog(); });
+
             using (var client = new WebClient())
             {
-                waitForm.Show();
-                client.DownloadFile("https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq", @".\bot.zip");
-                waitForm.Close();
+                client.DownloadFile(url, newVersionFile);
             }
-            return new RequestResult<bool>(true);
+            Thread.Sleep(2000);
+            var newVersion = new Version(File.ReadAllText(newVersionFile));
+            var oldVersion = new Version(File.ReadAllText(versionFilePath));
+            updateAvailable = newVersion > oldVersion;
+
+            waitForm.Close();
+            return new RequestResult<bool>(updateAvailable);
         }
 
         public RequestResult<string> DownloadUpdates(string url)

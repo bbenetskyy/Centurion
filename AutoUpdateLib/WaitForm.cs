@@ -26,9 +26,16 @@ namespace AutoUpdateLib
             InitializeComponent();
         }
 
+        public WaitForm(int interval)
+            : this()
+        {
+            Interval = interval;
+        }
+
         private void WaitForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             backgroundWorker1.CancelAsync();
+            progressBarAdv1.Value = progressBarAdv1.Maximum;
         }
 
         private void WaitForm_Shown(object sender, EventArgs e)

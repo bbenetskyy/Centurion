@@ -22,6 +22,9 @@ namespace BotHost
 
             IRepoChecker repoChecker = new RepoChecker();
 
+            repoChecker.ApplicationPath = Settings.Default.BotPath;
+            repoChecker.VersionFileName = Settings.Default.VersionFileName;
+
             try
             {
                 //Check for updates
