@@ -36,6 +36,7 @@ namespace AutoUpdateLib
         {
             backgroundWorker1.CancelAsync();
             progressBarAdv1.Value = progressBarAdv1.Maximum;
+            Thread.Sleep(100);
         }
 
         private void WaitForm_Shown(object sender, EventArgs e)

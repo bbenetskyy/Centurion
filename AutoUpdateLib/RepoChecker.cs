@@ -27,9 +27,7 @@ namespace AutoUpdateLib
 
             var updateAvailable = false;
             var newVersionFile = @".\newVersion.txt";
-            var waitForm = new WaitForm(50);
-
-            Task.Run(() => { waitForm.ShowDialog(); });
+            
 
             using (var client = new WebClient())
             {
@@ -40,7 +38,6 @@ namespace AutoUpdateLib
             var oldVersion = new Version(File.ReadAllText(versionFilePath));
             updateAvailable = newVersion > oldVersion;
 
-            waitForm.Close();
             return new RequestResult<bool>(updateAvailable);
         }
 
