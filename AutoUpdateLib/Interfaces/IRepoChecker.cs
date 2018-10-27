@@ -14,5 +14,6 @@ namespace AutoUpdateLib.Interfaces
         RequestResult<bool> CheckForUpdates(string url);
         RequestResult<string> DownloadUpdates(string url);
         RequestResult<bool> UpdateApplication(string sourcePath);
+        void UpdateAppVersionFile();
     }
 }

@@ -16,10 +16,13 @@ namespace AutoUpdateLib
     {
         public string VersionFileName { get; set; }
         public string ApplicationPath { get; set; }
-
+        public Version NewVersion { get; set; }
 
         public RequestResult<bool> CheckForUpdates(string url)
         {
+            try
+            {
+
             var versionFilePath = Path.Combine(ApplicationPath, VersionFileName);
             if (!File.Exists(versionFilePath))
                 return new RequestResult<bool>(new FileNotFoundException
@@ -33,22 +36,36 @@ namespace AutoUpdateLib
             {
                 client.DownloadFile(url, newVersionFile);
             }
-            Thread.Sleep(2000);
-            var newVersion = new Version(File.ReadAllText(newVersionFile));
+
+            NewVersion = new Version(File.ReadAllText(newVersionFile));
             var oldVersion = new Version(File.ReadAllText(versionFilePath));
-            updateAvailable = newVersion > oldVersion;
+            updateAvailable = NewVersion > oldVersion;
 
             return new RequestResult<bool>(updateAvailable);
+
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<bool>(ex);
+            }
         }
 
         public RequestResult<string> DownloadUpdates(string url)
         {
-            //return new RequestResult<string>(new Exception());
-            //using (var client = new WebClient())
-            //{
-            //    client.DownloadFile("https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq", @".\bot.zip");
-            //}
-            return new RequestResult<string>();
+            try
+            {
+                var botZipFile = @".\bot.zip";
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(url, botZipFile);
+                }
+
+                return new RequestResult<string>(botZipFile);
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<string>(ex);
+            }
         }
 
         public RequestResult<bool> UpdateApplication(string sourcePath)
@@ -60,20 +77,26 @@ namespace AutoUpdateLib
                 a.Entries.Where(
                     o => 
                         o.Name == string.Empty &&
-                        !Directory.Exists(Path.Combine(sourcePath, o.FullName)))
+                        !Directory.Exists(Path.Combine(ApplicationPath, o.FullName)))
                     .ToList()
                     .ForEach(
                         o => 
-                            Directory.CreateDirectory(Path.Combine(sourcePath, o.FullName)));
+                            Directory.CreateDirectory(Path.Combine(ApplicationPath, o.FullName)));
                 a.Entries.Where(
                     o => 
                         o.Name != string.Empty)
                     .ToList()
                     .ForEach(
                         e => 
-                            e.ExtractToFile(Path.Combine(sourcePath, e.FullName), true));
+                            e.ExtractToFile(Path.Combine(ApplicationPath, e.FullName), true));
             }
             return new RequestResult<bool>(true);
+        }
+
+        public void UpdateAppVersionFile()
+        {
+            var versionFilePath = Path.Combine(ApplicationPath, VersionFileName);
+            File.WriteAllText(versionFilePath, NewVersion.ToString());
         }
     }
 }

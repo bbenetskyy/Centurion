@@ -34,8 +34,7 @@ namespace BotHost.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq&export=downloa" +
-            "d")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://drive.google.com/uc?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq&export=download")]
         public string DownloadUrl {
             get {
                 return ((string)(this["DownloadUrl"]));

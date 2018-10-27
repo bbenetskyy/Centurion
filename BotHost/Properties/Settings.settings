@@ -6,7 +6,7 @@
       <Value Profile="(Default)">C:\Work\Centurion\testBot</Value>
     </Setting>
     <Setting Name="DownloadUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://drive.google.com/open?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq&amp;export=download</Value>
+      <Value Profile="(Default)">https://drive.google.com/uc?id=1jM0uP1FKqETv09GF5YUq0nE6RRweYNCq&amp;export=download</Value>
     </Setting>
     <Setting Name="CheckUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://drive.google.com/uc?id=1_Y2kguvTsSjqXq-fpSel4I_18_uaA96E&amp;export=download</Value>

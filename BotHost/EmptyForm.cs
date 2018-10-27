@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,50 +16,51 @@ namespace BotHost
 {
     public partial class EmptyForm : Form
     {
+        IRepoChecker repoChecker = new RepoChecker();
+
         public EmptyForm()
         {
             InitializeComponent();
+
+            repoChecker.ApplicationPath = Settings.Default.BotPath;
+            repoChecker.VersionFileName = Settings.Default.VersionFileName;
         }
 
 
         private void EmptyForm_Shown(object sender, EventArgs e)
         {
-            IRepoChecker repoChecker = new RepoChecker();
-
-            repoChecker.ApplicationPath = Settings.Default.BotPath;
-            repoChecker.VersionFileName = Settings.Default.VersionFileName;
-
             try
             {
                 //Check for updates
-                CheckForUpdates(repoChecker);
+                CheckForUpdates();
             }
             finally
             {
                 //Run Bot Application
                 try
                 {
-                    System.Diagnostics.Process.Start(Settings.Default.BotPath);
+                    System.Diagnostics.Process.Start(
+                        Path.Combine(Settings.Default.BotPath, Settings.Default.BotFileName));
                 }
-                catch (Exception exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(this, exception.Message,
+                    MessageBox.Show(this, ex.Message,
                         "Fatal Application Error!",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
                 }
-                this.Close();
+                Close();
             }
         }
 
-        private void CheckForUpdates(IRepoChecker repoChecker)
+        private void CheckForUpdates()
         {
             DialogResult retry;
             do
             {
                 retry = DialogResult.Cancel;
 
-                var waitForm = new WaitForm(50);
+                var waitForm = new WaitForm(30);
                 var task = Task.Run(() => { waitForm.ShowDialog(); });
 
                 var requestResult = repoChecker.CheckForUpdates(Settings.Default.CheckUrl);
@@ -73,7 +75,7 @@ namespace BotHost
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        DownloadUpdates(repoChecker);
+                        DownloadUpdates();
                     }
                 }
                 else
@@ -86,12 +88,18 @@ namespace BotHost
             } while (retry == DialogResult.Retry);
         }
 
-        private void DownloadUpdates(IRepoChecker repoChecker)
+        private void DownloadUpdates()
         {
+            var waitForm = new WaitForm(50);
+            var task = Task.Run(() => { waitForm.ShowDialog(); });
+
             var requestResult = repoChecker.DownloadUpdates(Settings.Default.DownloadUrl);
+
+            waitForm.Invoke(new Action(() => waitForm.Close()));
+
             if (requestResult.Success)
             {
-                UpdateApplication(repoChecker, requestResult.Result);
+                UpdateApplication(requestResult.Result);
             }
             else
             {
@@ -102,9 +110,15 @@ namespace BotHost
             }
         }
 
-        private void UpdateApplication(IRepoChecker repoChecker, string sourcePath)
+        private void UpdateApplication(string sourcePath)
         {
+            var waitForm = new WaitForm(100);
+            var task = Task.Run(() => { waitForm.ShowDialog(); });
+
             var requestResult = repoChecker.UpdateApplication(sourcePath);
+
+            waitForm.Invoke(new Action(() => waitForm.Close()));
+
             if (requestResult.Success)
             {
                 FinishUpdate(requestResult.Result);
@@ -127,6 +141,7 @@ namespace BotHost
                 "Update Completed",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+                repoChecker.UpdateAppVersionFile();
             }
             else
             {
