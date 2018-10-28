@@ -4,6 +4,6 @@
     {
         public string result { get; set; }
         public string message { get; set; }
-        public int error_code { get; set; }
+        public int? error_code { get; set; }
     }
 }

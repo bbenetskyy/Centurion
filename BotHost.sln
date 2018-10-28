@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdateLib", "AutoUpdate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseChecker", "LicenseChecker\LicenseChecker.csproj", "{D93C91E2-EA17-4E07-A0C3-1C3C8B473F23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseChecker.UnitTests", "LicenseChecker.UnitTests\LicenseChecker.UnitTests.csproj", "{88CFBDD4-2EDF-45AB-A5B3-8397265FAC42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseChecker.UnitTests", "LicenseChecker.UnitTests\LicenseChecker.UnitTests.csproj", "{3F483E24-D9F9-41B0-973C-4C2AF39AD72C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{D93C91E2-EA17-4E07-A0C3-1C3C8B473F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D93C91E2-EA17-4E07-A0C3-1C3C8B473F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D93C91E2-EA17-4E07-A0C3-1C3C8B473F23}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88CFBDD4-2EDF-45AB-A5B3-8397265FAC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88CFBDD4-2EDF-45AB-A5B3-8397265FAC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88CFBDD4-2EDF-45AB-A5B3-8397265FAC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88CFBDD4-2EDF-45AB-A5B3-8397265FAC42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F483E24-D9F9-41B0-973C-4C2AF39AD72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F483E24-D9F9-41B0-973C-4C2AF39AD72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F483E24-D9F9-41B0-973C-4C2AF39AD72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F483E24-D9F9-41B0-973C-4C2AF39AD72C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
