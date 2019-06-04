@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdateLib", "AutoUpdate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseChecker", "LicenseChecker\LicenseChecker.csproj", "{D93C91E2-EA17-4E07-A0C3-1C3C8B473F23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseChecker.UnitTests", "LicenseChecker.UnitTests\LicenseChecker.UnitTests.csproj", "{3F483E24-D9F9-41B0-973C-4C2AF39AD72C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LicenseChecker.UnitTests", "LicenseChecker.UnitTests\LicenseChecker.UnitTests.csproj", "{3F483E24-D9F9-41B0-973C-4C2AF39AD72C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

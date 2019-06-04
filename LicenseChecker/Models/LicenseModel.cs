@@ -8,9 +8,14 @@ namespace LicenseChecker.Models
 {
     public class LicenseModel
     {
-        public string url { get; set; }
-        public Guid? secret_key { get; set; }
-        public Guid? license_key { get; set; }
-        public string registered_domain { get; set; }
+        public string Response { get; set; }
+        public string Url { get; set; }
+        public string Bot { get; set; }
+        public string Key { get; set; }
+
+        public LicenseModel()
+        {
+            Response = "json";
+        }
     }
 }

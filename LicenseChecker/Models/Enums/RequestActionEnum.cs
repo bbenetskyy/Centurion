@@ -2,8 +2,9 @@
 {
     public enum RequestActionEnum
     {
-        active,
-        deactive,
-        check
+        slm_activate,
+        slm_deactivate,
+        slm_create_new,
+        slm_check
     }
 }

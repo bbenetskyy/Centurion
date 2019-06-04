@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace AutoUpdateLib
 {
-    public partial class WaitForm : Syncfusion.Windows.Forms.MetroForm
+    public partial class WaitForm : Form
     {
         public int Interval { get; set; } = 100;
 

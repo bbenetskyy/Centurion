@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,51 +22,32 @@ namespace LicenseChecker
             {
                 try
                 {
-                    var response = 
-                        await licenseModel.url
+                    var response = await
+                         licenseModel.Url
                             .WithClient(flurlClient)
-                            .PostUrlEncodedAsync(new RequestModel
+                            .SetQueryParams(new
                             {
-                                secret_key = licenseModel.secret_key,
-                                license_key = licenseModel.license_key,
-                                slm_action = Models.Enums.RequestActionEnum.check,
-                                registered_domain = licenseModel.registered_domain
+                                tmpl = licenseModel.Response,
+                                key = licenseModel.Key,
+                                bot = licenseModel.Bot,
+                                upc = WindowsIdentity.GetCurrent().Name
                             })
-                            .ReceiveJson<dynamic>() as JObject;
-                    if (response.GetValue("error_code") != null)
+                            .GetJsonAsync<dynamic>() as JObject;
+                    if (response.GetValue("error") != null)
                     {
-                        errorMessage = response.GetValue("message").Value<string>();
+                        errorMessage = response.GetValue("error").Value<string>();
                     }
                     else
                     {
-                        var status = (ActionEnum)Enum.Parse(typeof(ActionEnum), 
-                            response.GetValue("status").Value<string>());
-
-                        if (status == ActionEnum.pending)
-                        {
-                            response =
-                                await licenseModel.url
-                                    .WithClient(flurlClient)
-                                    .PostUrlEncodedAsync(new RequestModel
-                                    {
-                                        secret_key = licenseModel.secret_key,
-                                        license_key = licenseModel.license_key,
-                                        slm_action = Models.Enums.RequestActionEnum.active,
-                                        registered_domain = licenseModel.registered_domain
-                                    })
-                                    .ReceiveJson<dynamic>() as JObject;
-                            if (response.GetValue("error_code") != null)
-                            {
-                                errorMessage = response.GetValue("message").Value<string>();
-                            }
-                        }
-                        else if (status == ActionEnum.blocked)
-                        {
-                            errorMessage = "License have Blocked Status";
-                        }
-                        else if (status == ActionEnum.expired)
+                        var active = response.GetValue("active").Value<bool>();
+                        var expiredDate = response.GetValue("expire").Value<DateTime>();
+                        if (expiredDate <= DateTime.Now)
                         {
                             errorMessage = "License have Expired Status";
+                        }
+                        else if (!active)
+                        {
+                            errorMessage = "License does not have Actie Status";
                         }
                     }
                 }

@@ -9,9 +9,9 @@ namespace LicenseChecker.Models
 {
     public class RequestModel
     {
-        public Guid? secret_key { get; set; }
+        public string secret_key { get; set; }
         public RequestActionEnum slm_action { get; set; }
-        public Guid? license_key { get; set; }
+        public string license_key { get; set; }
         public string registered_domain { get; set; }
     }
 }

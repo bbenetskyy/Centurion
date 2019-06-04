@@ -9,8 +9,6 @@ namespace LicenseChecker.Models.Enums
     public enum ActionEnum
     {
         pending,
-        active,
-        blocked,
-        expired
+        active
     }
 }
