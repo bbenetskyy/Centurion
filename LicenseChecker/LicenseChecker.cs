@@ -1,21 +1,15 @@
 ﻿using Flurl.Http;
 using LicenseChecker.Models;
-using LicenseChecker.Models.Enums;
-using LicenseChecker.Utils;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LicenseChecker
 {
     public static class LicenseChecker
     {
-        public static async Task<Response> CheckLicenseStatus(LicenseModel licenseModel)
+        public static async Task<ResponseModel> CheckLicenseStatus(LicenseModel licenseModel)
         {
             string errorMessage = null;
             using (var flurlClient = new FlurlClient())
@@ -78,7 +72,7 @@ namespace LicenseChecker
                     }
                 }
             }
-            return new Response
+            return new ResponseModel
             {
                 Active = errorMessage == null,
                 ErrorMessage = errorMessage
